@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planets/model/planets.dart';
+import 'package:planets/ui/detail/detailPage.dart';
 
 class PlanetRow extends StatelessWidget{
 
@@ -84,10 +85,13 @@ class PlanetRow extends StatelessWidget{
           vertical: 16.0
       ),
       alignment: FractionalOffset.centerLeft,
-      child: new Image(
+      child: new Hero(
+        tag: "planet-hero-${planet.id}",
+        child: new Image(
         image: new AssetImage(planet.image),
         height: 92.0,
         width: 92.0,
+        )
       ),
     );
 
@@ -109,7 +113,11 @@ class PlanetRow extends StatelessWidget{
       ),
     );
 
-    return new Container(
+    return new GestureDetector(
+      onTap: () => Navigator.of(context).push(new PageRouteBuilder(
+        pageBuilder: (_, __, ___) => new DetailPage(planet)
+      )),
+      child: new Container(
       height: 124.0,
       margin: const  EdgeInsets.symmetric(
         vertical: 16.0,
@@ -121,7 +129,7 @@ class PlanetRow extends StatelessWidget{
           planetThumbnail
         ],
       ),
-    );
-  }
-
+    )
+  );
+ }
 }
